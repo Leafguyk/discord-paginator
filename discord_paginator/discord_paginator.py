@@ -7,7 +7,7 @@ from discord.ext.commands import Bot
 import asyncio
 from typing import Union,Optional, List
 
-class Page():
+class Page:
     def __init__(self,
                  message : Union[SlashCommand,Message],
                  bot : Bot,
