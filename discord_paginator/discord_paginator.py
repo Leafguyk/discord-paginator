@@ -12,8 +12,8 @@ class Page:
     def __init__(self,
                  message : Union[SlashCommand,Message],
                  bot : Bot,
-                 embeds : Optional[List[Embed]] = None,
-                 content : Optional[List[str]] = None,
+                 embeds : Optional[List[Embed]] = [],
+                 content : Optional[List[str]] = [],
                  timeout : Optional[int] = None,
                  hidden : Optional[bool] = False,
                  skipper : Optional[bool] = False):
