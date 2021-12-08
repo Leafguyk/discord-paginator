@@ -16,7 +16,9 @@ class Page:
                  content : Optional[List[str]] = [],
                  timeout : Optional[int] = None,
                  hidden : Optional[bool] = False,
-                 skipper : Optional[bool] = False):
+                 skipper : Optional[bool] = False,
+                 reply : Optional[bool] = False,
+                 mention_author : Optional[bool] = False):
         self.message=message
         self.bot=bot
         self.embeds=embeds
@@ -24,6 +26,8 @@ class Page:
         self.timeout=timeout
         self.hidden=hidden
         self.skipper=skipper
+        self.reply=reply
+        self.mention_author=mention_author
         if len(self.embeds)>len(self.content):
             self.length=len(self.embeds)
             while not len(self.embeds)==len(self.content):
@@ -79,13 +83,19 @@ class Page:
                 self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                 create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
                                                 create_button(label="Next",custom_id="Next",style=ButtonStyle.gray,disabled=True))]
-                msg = await self.message.channel.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
+                if self.reply==True:
+                    msg = await self.message.reply(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components,mention_author=self.mention_author)
+                else:
+                    msg = await self.message.channel.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
                 return None
             else:
                 self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                 create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
                                                 create_button(label="Next",custom_id="Next",style=ButtonStyle.gray))]
-                msg = await self.message.channel.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
+                if self.reply==True:
+                    msg = await self.message.reply(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components,mention_author=self.mention_author)
+                else:
+                    msg = await self.message.channel.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
             while True:
                 try:
                     button_ctx : ComponentContext = await wait_for_component(client=self.bot,messages=msg,components=self.components,timeout=self.timeout)
