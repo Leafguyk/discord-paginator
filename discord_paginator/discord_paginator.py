@@ -37,10 +37,17 @@ class Page:
     async def send(self):
         self.count=1
         if type(self.message)==SlashCommand:
-            self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
-                                            create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
-                                            create_button(label="Next",custom_id="Next",style=ButtonStyle.gray))]
-            msg = await self.message.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components,hidden=self.hidden)
+            if self.count==1 and self.count==self.length:
+                self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
+                                                create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
+                                                create_button(label="Next",custom_id="Next",style=ButtonStyle.gray,disabled=True))]
+                msg = await self.message.channel.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
+                return None
+            else:
+                self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
+                                                create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
+                                                create_button(label="Next",custom_id="Next",style=ButtonStyle.gray))]
+                msg = await self.message.channel.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
             while True:
                 try:
                     button_ctx : ComponentContext = await wait_for_component(client=self.bot,messages=msg,components=self.components,timeout=self.timeout)
@@ -48,11 +55,7 @@ class Page:
                         self.count=self.count+1
                     elif button_ctx.custom_id=="Back":
                         self.count=self.count-1
-                    if self.count==1 and self.count==self.length:
-                        self.components = [create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
-                                                      create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
-                                                      create_button(label="Next",custom_id="Next",style=ButtonStyle.gray,disabled=True))]
-                    elif self.count==1:
+                    if self.count==1:
                         self.components = [create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                       create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
                                                       create_button(label="Next",custom_id="Next",style=ButtonStyle.gray))]
@@ -72,10 +75,17 @@ class Page:
                     await msg.edit(components=self.components)
                     break
         if type(self.message)==Message:
-            self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
-                                            create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
-                                            create_button(label="Next",custom_id="Next",style=ButtonStyle.gray))]
-            msg = await self.message.channel.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
+            if self.count==1 and self.count==self.length:
+                self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
+                                                create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
+                                                create_button(label="Next",custom_id="Next",style=ButtonStyle.gray,disabled=True))]
+                msg = await self.message.channel.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
+                return None
+            else:
+                self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
+                                                create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
+                                                create_button(label="Next",custom_id="Next",style=ButtonStyle.gray))]
+                msg = await self.message.channel.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
             while True:
                 try:
                     button_ctx : ComponentContext = await wait_for_component(client=self.bot,messages=msg,components=self.components,timeout=self.timeout)
@@ -83,11 +93,7 @@ class Page:
                         self.count=self.count+1
                     elif button_ctx.custom_id=="Back":
                         self.count=self.count-1
-                    if self.count==1 and self.count==self.length:
-                        self.components = [create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
-                                                      create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
-                                                      create_button(label="Next",custom_id="Next",style=ButtonStyle.gray,disabled=True))]
-                    elif self.count==1:
+                    if self.count==1:
                         self.components = [create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                       create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
                                                       create_button(label="Next",custom_id="Next",style=ButtonStyle.gray))]
