@@ -4,4 +4,4 @@ pip install -U discord-paginator
 
 join discord server for support!
 
-https://discord.gg/E6uHCgXh54
+https://discord.gg/2VbK2PJGxw
