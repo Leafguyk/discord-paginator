@@ -45,12 +45,26 @@ class Page:
                 self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                 create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
                                                 create_button(label="Next",custom_id="Next",style=ButtonStyle.gray,disabled=True))]
+                if self.skipper == True:
+                    options=[]
+                    u=1
+                    while u < self.length+1:
+                        options.append(create_select_option("Page "+str(u)+"/"+str(self.length),value=str(u))) 
+                        u=u+1
+                    self.components.append(create_actionrow(create_select(options=options,placeholder="Skip page",min_values=1,max_values=1,disabled=True)))
                 msg = await self.sendable.channel.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
                 return None
             else:
                 self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                 create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
                                                 create_button(label="Next",custom_id="Next",style=ButtonStyle.gray))]
+                if self.skipper == True:
+                    options=[]
+                    u=1
+                    while u < self.length+1:
+                        options.append(create_select_option("Page "+str(u)+"/"+str(self.length),value=str(u))) 
+                        u=u+1
+                    self.components.append(create_actionrow(create_select(options=options,placeholder="Skip page",min_values=1,max_values=1)))
                 msg = await self.sendable.channel.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
             while True:
                 try:
@@ -59,6 +73,8 @@ class Page:
                         self.count=self.count+1
                     elif button_ctx.custom_id=="Back":
                         self.count=self.count-1
+                    else:
+                        self.count=int(button_ctx.values[0])
                     if self.count==1:
                         self.components = [create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                       create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
@@ -83,6 +99,13 @@ class Page:
                 self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                 create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
                                                 create_button(label="Next",custom_id="Next",style=ButtonStyle.gray,disabled=True))]
+                if self.skipper == True:
+                    options=[]
+                    u=1
+                    while u < self.length+1:
+                        options.append(create_select_option("Page "+str(u)+"/"+str(self.length),value=str(u))) 
+                        u=u+1
+                    self.components.append(create_actionrow(create_select(options=options,placeholder="Skip page",min_values=1,max_values=1,disabled=True)))
                 if self.reply==True:
                     msg = await self.sendable.reply(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components,mention_author=self.mention_author)
                 else:
@@ -92,6 +115,13 @@ class Page:
                 self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                 create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
                                                 create_button(label="Next",custom_id="Next",style=ButtonStyle.gray))]
+                if self.skipper == True:
+                    options=[]
+                    u=1
+                    while u < self.length+1:
+                        options.append(create_select_option("Page "+str(u)+"/"+str(self.length),value=str(u))) 
+                        u=u+1
+                    self.components.append(create_actionrow(create_select(options=options,placeholder="Skip page",min_values=1,max_values=1)))
                 if self.reply==True:
                     msg = await self.sendable.reply(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components,mention_author=self.mention_author)
                 else:
@@ -103,6 +133,8 @@ class Page:
                         self.count=self.count+1
                     elif button_ctx.custom_id=="Back":
                         self.count=self.count-1
+                    else:
+                        self.count=int(button_ctx.values[0])
                     if self.count==1:
                         self.components = [create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                       create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
@@ -127,12 +159,26 @@ class Page:
                 self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                 create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
                                                 create_button(label="Next",custom_id="Next",style=ButtonStyle.gray,disabled=True))]
+                if self.skipper == True:
+                    options=[]
+                    u=1
+                    while u < self.length+1:
+                        options.append(create_select_option("Page "+str(u)+"/"+str(self.length),value=str(u))) 
+                        u=u+1
+                    self.components.append(create_actionrow(create_select(options=options,placeholder="Skip page",min_values=1,max_values=1,disabled=True)))
                 msg = await self.sendable.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
                 return None
             else:
                 self.components=[create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                 create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
                                                 create_button(label="Next",custom_id="Next",style=ButtonStyle.gray))]
+                if self.skipper == True:
+                    options=[]
+                    u=1
+                    while u < self.length+1:
+                        options.append(create_select_option("Page "+str(u)+"/"+str(self.length),value=str(u))) 
+                        u=u+1
+                    self.components.append(create_actionrow(create_select(options=options,placeholder="Skip page",min_values=1,max_values=1)))
                 msg = await self.sendable.send(content=self.content[self.count-1],embed=self.embeds[self.count-1],components=self.components)
             while True:
                 try:
@@ -141,6 +187,8 @@ class Page:
                         self.count=self.count+1
                     elif button_ctx.custom_id=="Back":
                         self.count=self.count-1
+                    else:
+                        self.count=int(button_ctx.values[0])
                     if self.count==1:
                         self.components = [create_actionrow(create_button(label="Back",style=ButtonStyle.gray,custom_id="Back",disabled=True),
                                                       create_button(label="Page "+str(self.count)+"/"+str(self.length),disabled=True,style=ButtonStyle.gray),
